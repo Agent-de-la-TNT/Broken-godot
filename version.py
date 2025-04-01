@@ -1,10 +1,10 @@
-short_name = "godot"
-name = "Godot Engine"
+short_name = "bgodot"
+name = "Broken Godot Engine"
 major = 3
 minor = 6
 patch = 1
 status = "rc"
 module_config = ""
-year = 2024
+year = 2025
 website = "https://godotengine.org"
 docs = "3.6"

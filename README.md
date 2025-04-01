@@ -45,6 +45,8 @@ Official binaries for the Godot editor and the export templates can be found
 [See the official docs](https://docs.godotengine.org/en/latest/development/compiling/)
 for compilation instructions for every supported platform.
 
+to compile with vs code : use "task build" ("task build linux" if compiling for linux)
+
 ## Community and contributing
 
 Godot is not only an engine but an ever-growing community of users and engine
