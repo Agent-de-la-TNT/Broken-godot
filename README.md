@@ -45,7 +45,11 @@ Official binaries for the Godot editor and the export templates can be found
 [See the official docs](https://docs.godotengine.org/en/latest/development/compiling/)
 for compilation instructions for every supported platform.
 
-to compile with vs code : use "task build" ("task build linux" if compiling for linux)
+### Compiling vith the custom vs code sdk I built (unaviable from the github repository)
+
+to compile : use "task build" ("task build linux" if compiling for linux)
+
+to run your compiled godot app (windows x64 version only) : "task run"
 
 ## Community and contributing
 
