@@ -78,7 +78,7 @@ provided by the community, such as text and video tutorials, demos, etc.
 Consult the [community channels](https://godotengine.org/community)
 for more information.
 
-[![Actions Build Status](https://github.com/godotengine/godot/workflows/Godot/badge.svg?branch=master)](https://github.com/godotengine/godot/actions)
+[![Actions Build Status](https://github.com/godotengine/godot/workflows/Godot/badge.svg?branch=3.6)](https://github.com/godotengine/godot/actions)
 [![Code Triagers Badge](https://www.codetriage.com/godotengine/godot/badges/users.svg)](https://www.codetriage.com/godotengine/godot)
 [![Translate on Weblate](https://hosted.weblate.org/widgets/godot-engine/-/godot/svg-badge.svg)](https://hosted.weblate.org/engage/godot-engine/?utm_source=widget)
 [![TODOs](https://badgen.net/https/api.tickgit.com/badgen/github.com/godotengine/godot)](https://www.tickgit.com/browse?repo=github.com/godotengine/godot)
