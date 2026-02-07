@@ -1,0 +1,1 @@
+scons use_mingw=yes platform=windows

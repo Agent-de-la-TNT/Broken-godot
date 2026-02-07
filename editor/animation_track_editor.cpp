@@ -525,6 +525,7 @@ public:
 			case Animation::TYPE_TRANSFORM: {
 				p_list->push_back(PropertyInfo(Variant::VECTOR3, PNAME("location")));
 				p_list->push_back(PropertyInfo(Variant::QUAT, PNAME("rotation")));
+				p_list->push_back(PropertyInfo(Variant::VECTOR3, PNAME("euler_rotation")));			// Converts to (Quat) rotation
 				p_list->push_back(PropertyInfo(Variant::VECTOR3, PNAME("scale")));
 
 			} break;
@@ -1173,6 +1174,7 @@ public:
 				case Animation::TYPE_TRANSFORM: {
 					p_list->push_back(PropertyInfo(Variant::VECTOR3, "location"));
 					p_list->push_back(PropertyInfo(Variant::QUAT, "rotation"));
+					p_list->push_back(PropertyInfo(Variant::VECTOR3, "euler_rotation"));
 					p_list->push_back(PropertyInfo(Variant::VECTOR3, "scale"));
 				} break;
 				case Animation::TYPE_VALUE: {
@@ -2504,6 +2506,9 @@ String AnimationTrackEdit::get_tooltip(const Point2 &p_pos) const {
 					}
 					if (d.has("rotation")) {
 						text += TTR("Rotation:") + " " + String(d["rotation"]) + "\n";
+					}
+					if (d.has("euler_rotation")) {
+						text += TTR("Euler Rotation:") + " " + String(d["euler_rotation"]) + "\n";
 					}
 					if (d.has("scale")) {
 						text += TTR("Scale:") + " " + String(d["scale"]) + "\n";
@@ -4007,6 +4012,7 @@ AnimationTrackEditor::TrackIndices AnimationTrackEditor::_confirm_insert(InsertD
 			d["location"] = tr.origin;
 			d["scale"] = tr.basis.get_scale();
 			d["rotation"] = Quat(tr.basis);
+			d["euler_rotation"] = tr.basis.get_rotation_euler();
 			value = d;
 		} break;
 		case Animation::TYPE_BEZIER: {

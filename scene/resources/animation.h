@@ -95,6 +95,7 @@ private:
 	struct TransformKey {
 		Vector3 loc;
 		Quat rot;
+		Vector3 eul;
 		Vector3 scale;
 	};
 

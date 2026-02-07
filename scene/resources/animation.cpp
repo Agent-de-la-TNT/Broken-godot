@@ -100,6 +100,8 @@ bool Animation::_set(const StringName &p_name, const Variant &p_value) {
 					tk.value.rot.z = ofs[7];
 					tk.value.rot.w = ofs[8];
 
+					tk.value.eul = tk.value.rot.get_euler_xyz();
+
 					tk.value.scale.x = ofs[9];
 					tk.value.scale.y = ofs[10];
 					tk.value.scale.z = ofs[11];
@@ -798,7 +800,14 @@ Error Animation::transform_track_get_key(int p_track, int p_key, Vector3 *r_loc,
 		*r_loc = tt->transforms[p_key].value.loc;
 	}
 	if (r_rot) {
-		*r_rot = tt->transforms[p_key].value.rot;
+		if (tt->transforms[p_key].value.eul != Vector3 {0, 0, 0})
+		{
+			printf("DEBUG: Eul_sets_quat\n");
+			Quat _quat;
+			_quat.set_euler_xyz(tt->transforms[p_key].value.eul);
+			*r_rot = _quat;
+		}
+		else *r_rot = tt->transforms[p_key].value.rot;
 	}
 	if (r_scale) {
 		*r_scale = tt->transforms[p_key].value.scale;
@@ -818,6 +827,7 @@ int Animation::transform_track_insert_key(int p_track, float p_time, const Vecto
 	tkey.time = p_time;
 	tkey.value.loc = p_loc;
 	tkey.value.rot = p_rot;
+	printf("DEBUG: Tkey called\n");
 	tkey.value.scale = p_scale;
 
 	int ret = _insert(p_time, tt->transforms, tkey);
@@ -976,6 +986,12 @@ void Animation::track_insert_key(int p_track, float p_time, const Variant &p_key
 				rot = d["rotation"];
 			}
 
+			Vector3 eul;
+			if (d.has("euler_rotation")) {
+				//printf("test\n");
+				eul = d["euler_rotation"];
+			}
+
 			Vector3 scale;
 			if (d.has("scale")) {
 				scale = d["scale"];
@@ -1107,7 +1123,14 @@ Variant Animation::track_get_key_value(int p_track, int p_key_idx) const {
 
 			Dictionary d;
 			d["location"] = tt->transforms[p_key_idx].value.loc;
-			d["rotation"] = tt->transforms[p_key_idx].value.rot;
+			if (tt->transforms[p_key_idx].value.eul != Vector3 {0, 0, 0})
+			{
+				Quat _quat;
+				_quat.set_euler_xyz(tt->transforms[p_key_idx].value.eul);
+				d["rotation"] = _quat;
+			} // Euler HACK
+			else d["rotation"] = tt->transforms[p_key_idx].value.rot;
+			d["euler_rotation"] = tt->transforms[p_key_idx].value.eul;
 			d["scale"] = tt->transforms[p_key_idx].value.scale;
 
 			return d;
@@ -1325,6 +1348,17 @@ void Animation::track_set_key_value(int p_track, int p_key_idx, const Variant &p
 			}
 			if (d.has("rotation")) {
 				tt->transforms.write[p_key_idx].value.rot = d["rotation"];
+			}
+			if (d.has("euler_rotation")) {
+				tt->transforms.write[p_key_idx].value.eul = d["euler_rotation"];
+				//tt->transforms.write[p_key_idx].value.rot = ImportUtils::EulerToQuaternion(0, d["rotation"]);
+				if (tt->transforms[p_key_idx].value.eul != Vector3 {0, 0, 0})
+				{
+					printf("DEBUG: Euler Update\n");
+					Quat _quat;
+					_quat.set_euler_xyz(d["euler_rotation"]);
+					tt->transforms.write[p_key_idx].value.rot = _quat;
+				} // Euler HACK
 			}
 			if (d.has("scale")) {
 				tt->transforms.write[p_key_idx].value.scale = d["scale"];
